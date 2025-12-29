@@ -20,6 +20,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -30,8 +31,8 @@ import java.time.Instant;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     private String password;
     private String email;
     private Boolean isEmailVerified;
@@ -47,11 +48,9 @@ public class User {
     @Column(name = "status")
     private UserStatus userStatus;
 
-    @Column(nullable = false, updatable = false)
     @CreationTimestamp
     private Instant createdAt;
 
-    @Column(nullable = false)
     @UpdateTimestamp()
     private Instant updatedAt;
 }

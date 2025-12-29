@@ -6,6 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,6 +24,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -36,36 +38,28 @@ import java.util.List;
 public class Video {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
-    @Column(name = "name", nullable = false, unique = true, updatable = false)
     private String name;
-
-    @Column(name = "len_seconds", nullable = false)
     private Integer lenSeconds;
-
-    @Column(name = "description")
     private String description;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
     @CreationTimestamp
     private Instant createdAt;
 
-    @Column(name = "updated_at", nullable = false)
     @UpdateTimestamp()
     private Instant updatedAt;
 
-    @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private VideoStatus status;
 
     @Builder.Default
-    @OneToMany(mappedBy = "video", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "video", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<VideoMetadata> videoMetadata = new ArrayList<>();
 
     @Builder.Default
-    @OneToMany(mappedBy = "video", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "video", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<VideoCategory> videoCategory = new ArrayList<>();
 
     public void addMetadata(VideoMetadata metadata) {

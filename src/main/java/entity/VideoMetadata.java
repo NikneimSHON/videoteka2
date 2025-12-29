@@ -26,6 +26,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -39,17 +40,13 @@ import java.time.Instant;
 public class VideoMetadata {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "url", nullable = false, unique = true, updatable = false)
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     private String url;
 
-    @Column(name = "quality", nullable = false)
     @Convert(converter = VideoQualityConverter.class)
     private VideoQuality quality;
 
-    @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private MetadataStatus status;
 
@@ -57,11 +54,9 @@ public class VideoMetadata {
     @JoinColumn(name = "video_id", nullable = false)
     private Video video;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
     @CreationTimestamp
     private Instant createdAt;
 
-    @Column(name = "updated_at", nullable = false)
     @UpdateTimestamp()
     private Instant updatedAt;
 

@@ -21,12 +21,11 @@ public class HibernateRunner {
     public static void main(String[] args) {
         Configuration configuration = new Configuration();
         configuration.configure();
-        Video video;
         try (SessionFactory sessionFactory = configuration.buildSessionFactory();
              Session session = sessionFactory.openSession()
         ) {
             session.beginTransaction();
-            /*Video video = Video.builder()
+            Video video = Video.builder()
                     .createdAt(Instant.now())
                     .description("ds")
                     .name("ds")
@@ -46,8 +45,7 @@ public class HibernateRunner {
 
             session.persist(metadata);
 
-*/
-            video = session.find(Video.class,11L);
+
             session.getTransaction().commit();
         }
 

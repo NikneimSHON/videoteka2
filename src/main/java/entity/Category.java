@@ -21,6 +21,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -34,15 +35,13 @@ import java.util.List;
 public class Category {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     private String name;
 
-    @Column(nullable = false, updatable = false)
     @CreationTimestamp
     private Instant createdAt;
 
-    @Column(nullable = false)
     @UpdateTimestamp()
     private Instant updatedAt;
 
