@@ -28,7 +28,7 @@ public class HibernateRunner {
             Video video = Video.builder()
                     .createdAt(Instant.now())
                     .description("ds")
-                    .name("ds")
+                    .name("dsd")
                     .lenSeconds(10)
                     .status(VideoStatus.PUBLISHED)
                     .updatedAt(Instant.now())
@@ -37,14 +37,13 @@ public class HibernateRunner {
             session.persist(video);
 
             VideoMetadata metadata = VideoMetadata.builder()
-                    .url("https://example.com/adda")
+                    .url("https://example.com/add3a")
                     .quality(VideoQuality.P360)
                     .status(MetadataStatus.READY)
                     .video(video)
                     .build();
 
             session.persist(metadata);
-
 
             session.getTransaction().commit();
         }

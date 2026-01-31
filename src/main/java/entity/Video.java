@@ -1,8 +1,8 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import entity.enums.VideoStatus;
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -11,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,8 +23,8 @@ import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -56,11 +57,11 @@ public class Video {
 
     @Builder.Default
     @OneToMany(mappedBy = "video", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<VideoMetadata> videoMetadata = new ArrayList<>();
+    private Set<VideoMetadata> videoMetadata = new HashSet<>();
 
     @Builder.Default
     @OneToMany(mappedBy = "video", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<VideoCategory> videoCategory = new ArrayList<>();
+    private Set<VideoCategory> videoCategory = new HashSet<>();
 
     public void addMetadata(VideoMetadata metadata) {
         videoMetadata.add(metadata);
